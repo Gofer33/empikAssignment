@@ -1,16 +1,22 @@
 import React from 'react';
 import './App.css';
+import {applyMiddleware, createStore} from 'redux';
+import thunk from 'redux-thunk';
+import {composeWithDevTools} from 'redux-devtools-extension';
+import rootReducer from "../../store/reducers/reducer";
+import {Provider} from 'react-redux';
+import ProductsList from "../ProductsList";
 
 const App = () => {
+    const store = createStore(rootReducer, composeWithDevTools(
+        applyMiddleware(thunk),
+    ));
 
-  return (
-    <div className="container">
-      <h3>Lista produktów</h3>
-      <ul>
-        <li className="row">Patelnia, cena: 89,99zł</li>
-      </ul>
-    </div>
-  );
+    return (
+        <Provider store={store}>
+            <ProductsList/>
+        </Provider>
+    );
 };
 
 export {
